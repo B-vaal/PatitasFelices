@@ -1,0 +1,111 @@
+/* ===== PatitasFelices - estilos (mobile first) ===== */
+
+:root {
+  --crema: #fffaf3;
+  --naranja: #f4a261;
+  --naranja-oscuro: #d9803a;
+  --verde: #8ab79a;
+  --texto: #3d3430;
+  --gris: #7a6f69;
+  --borde: #efe2d3;
+  --radio: 14px;
+  --sombra: 0 2px 10px rgba(80, 50, 20, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--crema);
+  color: var(--texto);
+  line-height: 1.5;
+}
+
+img, svg { max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { line-height: 1.2; margin: 0 0 .5rem; }
+
+.contenedor { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+main { min-height: 60vh; padding: 1.5rem 0 3rem; }
+
+/* ----- Cabecera ----- */
+.cabecera { background: #fff; border-bottom: 1px solid var(--borde); position: sticky; top: 0; z-index: 10; }
+.cabecera .contenedor { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; padding-top: .7rem; padding-bottom: .7rem; }
+.logo { font-size: 1.3rem; font-weight: 700; color: var(--naranja-oscuro); }
+.menu { display: flex; gap: 1rem; font-size: .95rem; align-items: center; }
+.menu a:hover { color: var(--naranja-oscuro); }
+.menu a.activo { font-weight: 700; color: var(--naranja-oscuro); }
+.contador { background: var(--naranja); color: #fff; border-radius: 999px; padding: 0 .5rem; font-size: .8rem; margin-left: .2rem; }
+
+/* ----- Botones ----- */
+.btn { display: inline-block; border: 0; cursor: pointer; font: inherit; font-weight: 600; padding: .65rem 1.2rem; border-radius: 999px; background: var(--naranja); color: #fff; transition: background .15s; }
+.btn:hover { background: var(--naranja-oscuro); }
+.btn-suave { background: #fff; color: var(--naranja-oscuro); border: 1px solid var(--naranja); }
+.btn-suave:hover { background: #fff3e6; }
+
+/* ----- Portada ----- */
+.hero { background: linear-gradient(135deg, #ffe9d2, #e4f1e8); border-radius: var(--radio); padding: 2rem 1.2rem; text-align: center; margin-bottom: 2rem; }
+.hero h1 { font-size: 1.8rem; }
+.hero p { color: var(--gris); max-width: 480px; margin: 0 auto 1rem; }
+
+.categorias { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; margin-bottom: 2rem; }
+.categoria { background: #fff; border: 1px solid var(--borde); border-radius: var(--radio); padding: 1.2rem .5rem; text-align: center; box-shadow: var(--sombra); font-weight: 600; }
+.categoria span { display: block; font-size: 2.2rem; }
+.categoria:hover { border-color: var(--naranja); }
+
+/* ----- Tarjetas de producto ----- */
+.grilla { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; }
+.tarjeta { background: #fff; border: 1px solid var(--borde); border-radius: var(--radio); overflow: hidden; box-shadow: var(--sombra); display: flex; flex-direction: column; }
+.tarjeta .info { padding: .7rem; display: flex; flex-direction: column; gap: .3rem; flex: 1; }
+.tarjeta h3 { font-size: .95rem; margin: 0; }
+.tarjeta .btn { margin-top: auto; padding: .5rem; font-size: .9rem; }
+
+/* Imagen placeholder: fondo de color + emoji */
+.foto { aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+.precio { font-weight: 700; color: var(--naranja-oscuro); }
+.etiqueta { font-size: .75rem; color: var(--gris); }
+
+/* ----- Catálogo ----- */
+.filtros { background: #fff; border: 1px solid var(--borde); border-radius: var(--radio); padding: .8rem; margin-bottom: 1rem; display: grid; gap: .6rem; }
+.filtros input, .filtros select { font: inherit; padding: .55rem .7rem; border: 1px solid var(--borde); border-radius: 10px; width: 100%; background: #fff; }
+.vacio { text-align: center; color: var(--gris); padding: 2rem 0; }
+
+/* ----- Detalle de producto ----- */
+.detalle { display: grid; gap: 1.2rem; }
+.detalle .foto { border-radius: var(--radio); font-size: 6rem; }
+.detalle .precio { font-size: 1.6rem; }
+.cantidad { display: flex; align-items: center; gap: .5rem; margin: 1rem 0; }
+.cantidad button { width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 1px solid var(--borde); background: #fff; font-size: 1.1rem; cursor: pointer; }
+.cantidad span { min-width: 1.5rem; text-align: center; font-weight: 600; }
+.aviso { color: var(--verde); font-weight: 600; min-height: 1.5rem; }
+.migas { font-size: .85rem; color: var(--gris); margin-bottom: 1rem; }
+
+/* ----- Carrito ----- */
+.fila-carrito { display: grid; grid-template-columns: 64px 1fr auto; gap: .8rem; align-items: center; background: #fff; border: 1px solid var(--borde); border-radius: var(--radio); padding: .6rem; margin-bottom: .6rem; }
+.fila-carrito .foto { width: 64px; height: 64px; aspect-ratio: auto; font-size: 2rem; border-radius: 10px; }
+.fila-carrito .quitar { background: none; border: 0; color: var(--gris); cursor: pointer; font-size: .8rem; text-decoration: underline; padding: 0; }
+.resumen { background: #fff; border: 1px solid var(--borde); border-radius: var(--radio); padding: 1rem; margin-top: 1rem; }
+.resumen .linea { display: flex; justify-content: space-between; padding: .2rem 0; }
+.resumen .total { font-size: 1.2rem; font-weight: 700; border-top: 1px solid var(--borde); margin-top: .4rem; padding-top: .6rem; }
+.confirmacion { background: #e4f1e8; border-radius: var(--radio); padding: 1.5rem; text-align: center; }
+
+/* ----- Formulario de contacto ----- */
+.formulario { display: grid; gap: .8rem; max-width: 520px; }
+.formulario label { font-weight: 600; font-size: .9rem; display: grid; gap: .3rem; }
+.formulario input, .formulario textarea { font: inherit; padding: .6rem .7rem; border: 1px solid var(--borde); border-radius: 10px; background: #fff; }
+
+/* ----- Pie de página ----- */
+.pie { background: #fff; border-top: 1px solid var(--borde); text-align: center; padding: 1.5rem 1rem; color: var(--gris); font-size: .85rem; }
+
+/* ===== Pantallas más grandes ===== */
+@media (min-width: 700px) {
+  .hero h1 { font-size: 2.4rem; }
+  .categorias { grid-template-columns: repeat(4, 1fr); }
+  .grilla { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .filtros { grid-template-columns: 2fr 1fr 1fr; }
+  .detalle { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+@media (min-width: 960px) {
+  .grilla { grid-template-columns: repeat(4, 1fr); }
+}
