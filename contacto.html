@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto | PatitasFelices</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="cabecera"></div>
+
+  <main class="contenedor">
+    <h1>Contáctanos 💌</h1>
+    <p>¿Dudas sobre un producto o tu pedido? Escríbenos y te respondemos pronto.</p>
+
+    <form class="formulario" id="formulario">
+      <label>Nombre
+        <input type="text" name="nombre" required>
+      </label>
+      <label>Correo
+        <input type="email" name="correo" required>
+      </label>
+      <label>Mensaje
+        <textarea name="mensaje" rows="5" required></textarea>
+      </label>
+      <button class="btn" type="submit">Enviar mensaje</button>
+    </form>
+
+    <p class="aviso" id="aviso"></p>
+  </main>
+
+  <div id="pie"></div>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Formulario simulado: no se envía nada, solo se muestra un mensaje
+    document.getElementById("formulario").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nombre = e.target.nombre.value.trim();
+      e.target.reset();
+      document.getElementById("aviso").textContent =
+        "¡Gracias, " + nombre + "! Recibimos tu mensaje (demo: no se envió a ningún lugar) ✓";
+    });
+  </script>
+</body>
+</html>
