@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo | PatitasFelices</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="cabecera"></div>
+
+  <main class="contenedor">
+    <h1>Catálogo</h1>
+
+    <!-- Filtros y búsqueda -->
+    <section class="filtros">
+      <input type="search" id="busqueda" placeholder="Buscar producto..." aria-label="Buscar producto">
+      <select id="filtro-categoria" aria-label="Categoría">
+        <option value="">Alimentos y juguetes</option>
+        <option value="alimentos">Alimentos</option>
+        <option value="juguetes">Juguetes</option>
+      </select>
+      <select id="filtro-mascota" aria-label="Mascota">
+        <option value="">Perros y gatos</option>
+        <option value="perro">Perros</option>
+        <option value="gato">Gatos</option>
+      </select>
+    </section>
+
+    <p class="etiqueta" id="resultados"></p>
+    <section class="grilla" id="lista"></section>
+  </main>
+
+  <div id="pie"></div>
+
+  <script src="js/app.js"></script>
+  <script>
+    const inputBusqueda = document.getElementById("busqueda");
+    const selCategoria = document.getElementById("filtro-categoria");
+    const selMascota = document.getElementById("filtro-mascota");
+    const lista = document.getElementById("lista");
+    let productos = [];
+
+    // Si llegamos desde la portada, los filtros vienen en la URL (?categoria=...&mascota=...)
+    const params = new URLSearchParams(location.search);
+    selCategoria.value = params.get("categoria") || "";
+    selMascota.value = params.get("mascota") || "";
+
+    // Aplica búsqueda + filtros y dibuja la lista
+    function dibujar() {
+      const texto = inputBusqueda.value.trim().toLowerCase();
+      const filtrados = productos.filter((p) =>
+        (!selCategoria.value || p.categoria === selCategoria.value) &&
+        (!selMascota.value || p.mascota === selMascota.value) &&
+        (!texto || p.nombre.toLowerCase().includes(texto))
+      );
+      document.getElementById("resultados").textContent =
+        filtrados.length + (filtrados.length === 1 ? " producto" : " productos");
+      lista.innerHTML = filtrados.length
+        ? filtrados.map(htmlTarjeta).join("")
+        : '<p class="vacio">No encontramos productos con esos filtros 🐾</p>';
+    }
+
+    cargarProductos().then((datos) => {
+      productos = datos;
+      dibujar();
+    });
+
+    [inputBusqueda, selCategoria, selMascota].forEach((el) => el.addEventListener("input", dibujar));
+    activarBotonesAgregar(lista);
+  </script>
+</body>
+</html>
