@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carrito | PatitasFelices</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="cabecera"></div>
+
+  <main class="contenedor">
+    <h1>Tu carrito 🛒</h1>
+    <div id="carrito"></div>
+  </main>
+
+  <div id="pie"></div>
+
+  <script src="js/app.js"></script>
+  <script>
+    const cont = document.getElementById("carrito");
+    let productos = [];
+
+    // Dibuja las filas del carrito y el resumen de compra
+    function dibujar() {
+      const carrito = leerCarrito();
+
+      if (carrito.length === 0) {
+        cont.innerHTML = '<p class="vacio">Tu carrito está vacío 🐾<br><br><a class="btn" href="catalogo.html">Ir al catálogo</a></p>';
+        return;
+      }
+
+      let total = 0;
+      const filas = carrito.map((item) => {
+        const p = productos.find((x) => x.id === item.id);
+        if (!p) return ""; // producto que ya no existe
+        const subtotal = p.precio * item.cantidad;
+        total += subtotal;
+        return `
+          <div class="fila-carrito">
+            ${htmlFoto(p)}
+            <div>
+              <strong>${p.nombre}</strong><br>
+              <span class="etiqueta">${formatoCLP(p.precio)} c/u</span>
+              <div class="cantidad" style="margin:.3rem 0">
+                <button data-menos="${p.id}" aria-label="Menos">−</button>
+                <span>${item.cantidad}</span>
+                <button data-mas="${p.id}" aria-label="Más">+</button>
+              </div>
+              <button class="quitar" data-quitar="${p.id}">Quitar</button>
+            </div>
+            <span class="precio">${formatoCLP(subtotal)}</span>
+          </div>`;
+      }).join("");
+
+      cont.innerHTML = filas + `
+        <section class="resumen">
+          <div class="linea"><span>Subtotal</span><span>${formatoCLP(total)}</span></div>
+          <div class="linea"><span>Envío</span><span>Gratis (demo)</span></div>
+          <div class="linea total"><span>Total</span><span>${formatoCLP(total)}</span></div>
+          <br>
+          <button class="btn" id="pagar">Finalizar compra</button>
+        </section>`;
+    }
+
+    // Cambia cantidad o quita productos usando un solo listener
+    cont.addEventListener("click", (e) => {
+      const carrito = leerCarrito();
+      const idDe = (attr) => Number(e.target.dataset[attr]);
+
+      if (e.target.dataset.mas) {
+        carrito.find((i) => i.id === idDe("mas")).cantidad++;
+      } else if (e.target.dataset.menos) {
+        const item = carrito.find((i) => i.id === idDe("menos"));
+        item.cantidad = Math.max(1, item.cantidad - 1);
+      } else if (e.target.dataset.quitar) {
+        guardarCarrito(carrito.filter((i) => i.id !== idDe("quitar")));
+        return dibujar();
+      } else if (e.target.id === "pagar") {
+        return finalizarCompra();
+      } else {
+        return;
+      }
+      guardarCarrito(carrito);
+      dibujar();
+    });
+
+    // Checkout simulado: no se cobra nada, solo se vacía el carrito y se confirma
+    function finalizarCompra() {
+      const numero = Math.floor(10000 + Math.random() * 90000);
+      guardarCarrito([]);
+      cont.innerHTML = `
+        <div class="confirmacion">
+          <h2>¡Gracias por tu compra! 🎉</h2>
+          <p>Tu pedido <strong>#${numero}</strong> fue recibido.</p>
+          <p class="etiqueta">Esto es una demo: no se realizó ningún cobro ni envío real.</p>
+          <a class="btn" href="index.html">Volver al inicio</a>
+        </div>`;
+    }
+
+    cargarProductos().then((datos) => {
+      productos = datos;
+      dibujar();
+    });
+  </script>
+</body>
+</html>
